@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: events-internal
+  name: events-internal
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: events-internal
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: events-internal
+    spec:
+      containers:
+      - image: gcr.io/mar-roidtc310/internal-image:v1.0.0
+        name: events-internal
+        imagePullPolicy: "Always"
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "0.1"
+          limits:
+            memory: "256Mi"
+            cpu: "0.2"
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        livenessProbe:
+          httpGet:
+            port: 8080
+          initialDelaySeconds: 15
+          periodSeconds: 20
+status: {}
