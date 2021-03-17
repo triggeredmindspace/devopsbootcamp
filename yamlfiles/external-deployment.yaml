@@ -5,7 +5,7 @@ metadata:
     app: events-external
   name: events-external
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: events-external
@@ -18,7 +18,7 @@ spec:
       containers:
       - image: gcr.io/mar-roidtc310/external-image:v1.0.0
         name: events-external
-        imagePullPolicy: "Always"
+        imagePullPolicy: "IfNotPresent"
         env:
         - name: SERVER
           value: "http://events-internal"
@@ -29,16 +29,16 @@ spec:
           limits:
             memory: "256Mi"
             cpu: "0.2"
-        readinessProbe:
-          httpGet:
-            path: /health
-            port: 8080
-          initialDelaySeconds: 5
-          periodSeconds: 10
-        livenessProbe:
-          httpGet:
-            port: 8080
-          initialDelaySeconds: 15
-          periodSeconds: 20
+        # readinessProbe:
+        #   httpGet:
+        #     #path: /health
+        #     port: 80
+        #   initialDelaySeconds: 5
+        #   periodSeconds: 10
+        # livenessProbe:
+        #   httpGet:
+        #     port: 80
+        #   initialDelaySeconds: 5
+        #   periodSeconds: 10
         
 status: {}

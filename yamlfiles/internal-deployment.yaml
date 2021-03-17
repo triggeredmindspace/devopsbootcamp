@@ -18,7 +18,7 @@ spec:
       containers:
       - image: gcr.io/mar-roidtc310/internal-image:v1.0.0
         name: events-internal
-        imagePullPolicy: "Always"
+        imagePullPolicy: "IfNotPresent"
         resources:
           requests:
             memory: "128Mi"
@@ -26,15 +26,15 @@ spec:
           limits:
             memory: "256Mi"
             cpu: "0.2"
-        readinessProbe:
-          httpGet:
-            path: /health
-            port: 8080
-          initialDelaySeconds: 5
-          periodSeconds: 10
-        livenessProbe:
-          httpGet:
-            port: 8080
-          initialDelaySeconds: 15
-          periodSeconds: 20
+        # readinessProbe:
+        #   httpGet:
+        #     path: /health
+        #     port: 8082
+        #   initialDelaySeconds: 5
+        #   periodSeconds: 10
+        # livenessProbe:
+        #   httpGet:
+        #     port: 8082
+        #   initialDelaySeconds: 15
+        #   periodSeconds: 20
 status: {}
